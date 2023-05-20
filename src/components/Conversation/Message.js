@@ -4,6 +4,7 @@ import {Chat_History} from '../../data'
 import { DocMsg, LinkMsg, MediaMsg, ReplyMsg, TextMsg, TimeLine } from './MsgTypes';
 
 const Message = ({data, menu}) => {
+  console.log(data);
   return (
     <Box p={3}>
         <Stack spacing={3}>
@@ -28,7 +29,6 @@ const Message = ({data, menu}) => {
                                return <TextMsg el={el} menu={menu}/>
                         }
                         break;
-                
                     default:
                       return <></>;
                 }

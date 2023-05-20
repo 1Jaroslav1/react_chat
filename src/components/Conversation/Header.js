@@ -6,6 +6,7 @@ import { faker } from '@faker-js/faker';
 import StyledBadge from '../StyledBadge';
 import { ToggleSidebar } from '../../redux/slices/app';
 import { useDispatch } from 'react-redux';
+import OurAvatar from '../../assets/Images/avatar.jpeg';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -24,15 +25,14 @@ const Header = () => {
                     horizontal: "right",
                 }}
                 variant="dot">
-                    <Avatar alt={faker.name.fullName()} src={faker.image.avatar()}/>
+                    <Avatar alt={faker.name.fullName()} src={OurAvatar} sx={{ height: '70px', width: '70px' }}/>
                 </StyledBadge>
-                
             </Box>
             <Stack spacing={0.2}>
-                    <Typography variant='subtitle2'>
-                        {faker.name.fullName()}
+                    <Typography variant='subtitle2' fontSize="20px">
+                        Mateusz Kalinka
                     </Typography>
-                    <Typography variant='caption'>
+                    <Typography variant='caption' fontSize="20px">
                         Online
                     </Typography>
                 </Stack>

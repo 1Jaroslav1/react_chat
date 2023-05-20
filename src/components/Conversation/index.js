@@ -5,78 +5,42 @@ import Header from './Header';
 import Footer from './Footer';
 import Message from './Message';
 import {faker} from "@faker-js/faker";
+import axios from 'axios';
 
-const defaultData = [
-    {
-        type: "msg",
-        message: "Hi 👋🏻, How are ya ?",
-        incoming: true,
-        outgoing: false,
-    },
-    // {
-    //     type: "msg",
-    //     message: "Hi 👋 Panda, not bad, u ?",
-    //     incoming: false,
-    //     outgoing: true,
-    // },
-    // {
-    //     type: "msg",
-    //     message: "Can you send me an abstarct image?",
-    //     incoming: false,
-    //     outgoing: true,
-    // },
-    // {
-    //     type: "msg",
-    //     message: "Ya sure, sending you a pic",
-    //     incoming: true,
-    //     outgoing: false,
-    // },
-    //
-    // {
-    //     type: "msg",
-    //     subtype: "img",
-    //     message: "Here You Go",
-    //     img: faker.image.abstract(),
-    //     incoming: true,
-    //     outgoing: false,
-    // },
-    // {
-    //     type: "msg",
-    //     message: "Can you please send this in file format?",
-    //     incoming: false,
-    //     outgoing: true,
-    // },
-    //
-    // {
-    //     type: "msg",
-    //     subtype: "doc",
-    //     message: "Yes sure, here you go.",
-    //     incoming: true,
-    //     outgoing: false,
-    // },
-    // {
-    //     type: "msg",
-    //     subtype: "link",
-    //     preview: faker.image.cats(),
-    //     message: "Yep, I can also do that",
-    //     incoming: true,
-    //     outgoing: false,
-    // },
-    // {
-    //     type: "msg",
-    //     subtype: "reply",
-    //     reply: "This is a reply",
-    //     message: "Yep, I can also do that",
-    //     incoming: false,
-    //     outgoing: true,
-    // },
-];
+const apiKey = "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";
+
+const defaultData = [];
 
 const Conversation = () => {
     const theme = useTheme();
     const [data, setData] = useState(defaultData);
     const [submitInput, setSubmitInput] = useState("");
     const [response, setResponse] = useState("")
+
+    const sendMessage = async (message) => {
+      const client = axios.create({
+        headers: {
+          Authorization: "Bearer " + apiKey,
+        },
+      });
+
+      const params = {
+        prompt: message,
+        model: "text-davinci-003",
+        max_tokens: 256,
+        n: 1,
+        temperature: 0.5,
+      };
+
+      client
+        .post("https://api.openai.com/v1/completions", params)
+        .then((result) => {
+          setResponse(result.data.choices[0].text);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
     const handleSubmit = useCallback((input) => {
       console.log("submit");
@@ -89,18 +53,21 @@ const Conversation = () => {
           outgoing: true,
         }
       ])
+      sendMessage(input);
     });
 
     useEffect(() => {
-      setData([
-        ...data,
-        {
-          type: "msg",
-          message: response,
-          incoming: true,
-          outgoing: false,
-        }
-      ])
+      if (response) {
+        setData([
+          ...data,
+          {
+            type: "msg",
+            message: response,
+            incoming: true,
+            outgoing: false,
+          }
+        ])
+      }
     }, [response])
   
   return (
