@@ -14,30 +14,11 @@ const GeneralApp = () => {
   return (
     <Stack direction='row' sx={{ width: '100%' }}>
       {/* Chats */}
-      <Chats />
-
-      <Box sx={{ height: '100%', width: sidebar.open ? 'calc(100vw - 740px)': 'calc(100vw - 420px)',
+      <Box sx={{ height: '100%', width: sidebar.open ? 'calc(100vw - 100px)': 'calc(100vw - 420px)',
        backgroundColor: theme.palette.mode === 'light' ? '#F0F4FA' : theme.palette.background.default }}>
       {/* Conversation */}
       <Conversation/>
       </Box>
-      {/* Contact */}
-      {sidebar.open && (()=>{
-        switch (sidebar.type) {
-          case 'CONTACT':
-            return <Contact/>
-
-          case 'STARRED':
-            return <StarredMessages/>
-
-          case 'SHARED':
-            return <SharedMessages/>
-        
-          default:
-            break;
-        }
-      })()  }
-     
     </Stack>
   );
 };

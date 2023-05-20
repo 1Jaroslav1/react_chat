@@ -1,5 +1,5 @@
 import { Box, Fab, IconButton, InputAdornment, Stack, TextField, Tooltip } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { styled, useTheme } from "@mui/material/styles";
 import { LinkSimple, PaperPlaneTilt, Smiley,Camera, File, Image, Sticker, User } from 'phosphor-react';
 import data from '@emoji-mart/data'
@@ -45,10 +45,11 @@ const StyledInput = styled(TextField)(({ theme }) => ({
     }
   ];
 
-const ChatInput = ({setOpenPicker}) =>{
+const ChatInput = ({setOpenPicker, inputValue, handleChange}) =>{
     const [openAction, setOpenAction] = useState(false);
+
     return (
-        <StyledInput fullWidth placeholder='Write a message...' variant='filled' InputProps={{
+        <StyledInput fullWidth placeholder='Write a message...' variant='filled' value={inputValue} onChange={handleChange} InputProps={{
             disableUnderline: true,
             startAdornment: 
             <Stack sx={{width:'max-content'}}>
@@ -82,9 +83,21 @@ const ChatInput = ({setOpenPicker}) =>{
     )
 }
 
-const Footer = () => {
+const Footer = ({handleSubmit}) => {
     const theme = useTheme();
     const [openPicker, setOpenPicker] = useState(false);
+    const [input, setInput] = useState("");
+
+    const handleChange = useCallback((e) => {
+        setInput(e.target.value);
+    });
+
+    const handleSubmitClick = useCallback(() => {
+        console.log(input);
+        handleSubmit(input);
+        setInput("");
+    });
+
   return (
     <Box p={2} sx={{ width:'100%', backgroundColor: theme.palette.mode === 'light' ? '#F8FAFF' :
      theme.palette.background.paper, boxShadow:'0px 0px 2px rgba(0,0,0,0.25)'}}>
@@ -95,13 +108,13 @@ const Footer = () => {
             <Box sx={{ display: openPicker ? 'inline' : 'none' , zIndex:10, position:'fixed',bottom:81, right:100}}>
                 <Picker theme={theme.palette.mode} data={data} onEmojiSelect={console.log}/>
             </Box> 
-            <ChatInput setOpenPicker={setOpenPicker}/>
+            <ChatInput setOpenPicker={setOpenPicker} inputValue={input} handleChange={handleChange} />  
         </Stack>
         
         <Box sx={{height:48, width: 48, backgroundColor:theme.palette.primary.main, 
         borderRadius: 1.5}}>
             <Stack sx={{height:'100%', width:'100%', alignItems:'center', justifyContent:'center'}}>
-                <IconButton>
+                <IconButton onClick={handleSubmitClick}>
                     <PaperPlaneTilt color='#fff'/>
                 </IconButton>
             </Stack>

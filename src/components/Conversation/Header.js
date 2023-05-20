@@ -37,21 +37,6 @@ const Header = () => {
                     </Typography>
                 </Stack>
         </Stack>
-        <Stack direction='row' alignItems='center' spacing={3}>
-            <IconButton>
-                <VideoCamera/>
-            </IconButton>
-            <IconButton>
-                <Phone/>
-            </IconButton>
-            <IconButton>
-                <MagnifyingGlass/>
-            </IconButton>
-            <Divider orientation='vertical' flexItem/>
-            <IconButton>
-                <CaretDown/>
-            </IconButton>
-        </Stack>
     </Stack>
 </Box>
   )

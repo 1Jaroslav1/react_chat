@@ -3,11 +3,11 @@ import React from 'react';
 import {Chat_History} from '../../data'
 import { DocMsg, LinkMsg, MediaMsg, ReplyMsg, TextMsg, TimeLine } from './MsgTypes';
 
-const Message = ({menu}) => {
+const Message = ({data, menu}) => {
   return (
     <Box p={3}>
         <Stack spacing={3}>
-            {Chat_History.map((el)=>{
+            {data.map((el)=>{
                 switch (el.type) {
                     case 'divider':
                       return <TimeLine el={el}/>

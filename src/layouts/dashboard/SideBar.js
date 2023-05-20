@@ -114,12 +114,6 @@ const SideBar = () => {
             <AntSwitch onChange={()=>{
                 onToggleMode();
             }} defaultChecked/>
-            <Avatar id='basic-button' sx={{cursor:'pointer'}}
-            src={faker.image.avatar()}
-            aria-controls={open ? 'basic-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}/>
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
@@ -131,19 +125,6 @@ const SideBar = () => {
               anchorOrigin={{vertical:'bottom', horizontal:'right'}}
               transformOrigin={{vertical:'bottom', horizontal:'left'}}
             >
-            <Stack spacing={1} px={1}>
-              {Profile_Menu.map((el, idx)=>(
-                  <MenuItem onClick={ ()=> {handleClick(); } }>
-                    <Stack onClick={()=>{
-                      navigate(getMenuPath(idx))
-                    }} sx={{width:100}} direction='row' alignItems={'center'}
-                     justifyContent='space-between'>
-                      <span>{el.title}</span>
-                      {el.icon}
-                    </Stack>  
-                  </MenuItem>
-              ))}
-            </Stack>
           </Menu>
           </Stack>   
         </Stack>
